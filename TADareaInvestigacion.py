@@ -2,7 +2,7 @@
 
 def crearAreaDeInvestigacion():
     # Crea un área de investigación
-    pass
+ pass
 
 
 def AgregarInvestigador(areainvestigacion, investigador):
@@ -23,7 +23,7 @@ def tamanioAreaInvestigacion(areainvestigacion):
     pass
 
 def recuperarInvestigador(areainvestigacion, i):
-    #Retorna el alumno de la posición iésima
+    #Retorna el investigador de la posición iésima
     pass
 
 
