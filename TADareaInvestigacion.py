@@ -4,6 +4,10 @@ def crearAreaDeInvestigacion():
     # Crea un área de investigación
  pass
 
+def VerNombreAreaInvestigacion(areainvestigacion):
+    #Retorna el nombre del Area de Investigacion
+    pass
+
 
 def AgregarInvestigador(areainvestigacion, investigador):
     #Agrega al investigador al Área de investigacion
