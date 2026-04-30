@@ -1,5 +1,5 @@
-# from TADInviestigador import *
-# from TADAreaInvestigacion import *
+import TADareaInvestigacion
+import TADInvestigador
 # from TADCola import *
 from datetime import date
 
@@ -7,12 +7,18 @@ from datetime import date
 TADInvestigador:
     - nombre: string
     - apellido: string
-    - area_de_investigación: string
     - ano_de_ingreso: date
-    - laboratorio: string
+    - laboratorio: int
     - legajo: int
 """
 
+areaQumica = crearAreaDeInvestigacion()
+areaBiologia = crearAreaDeInvestigacion()
+
+areas = [areaBiologia, areaQumica]
+
+def buscarInvestigadorPorLegajo(legajo):
+    return 
 
 def menuPrincipal():
     print("\n--- Menú Principal ---")
@@ -27,19 +33,28 @@ def menuPrincipal():
     return int(input("Seleccione una opción: "))
 
 def interfazAgregarInvestigador():
+    legajo = int(input("Ingrese el legajo: "))
     nombre = input("Ingrese el nombre del investigador: ")
     apellido = input("Ingrese el apellido del investigador: ")
-    area = input("Ingrese el área de investigación: ")
     anoIngreso = int(input("Ingrese el año de ingreso: "))
     laboratorio = input("Ingrese el laboratorio: ")
-    legajo = int(input("Ingrese el legajo: "))
 
+    print("Seleccione el área de investigación:")
+    for i, area in enumerate(areas):
+        print(f"{i+1}. {TADareaInvestigacion.verNombre(area)}")
+    areaSeleccionada = int(input("Opción: ")) - 1
+    
+    nuevoInvestigador = TADInvestigador.crearInvestigador()
+    TADInvestigador.cargarInvestigador(nuevoInvestigador, nombre, apellido, legajo, anoIngreso, laboratorio)
+
+    # TADareaInvestigacion(areas[areaSeleccionada], )
     return
 
 def interfazModificarInvestigador():
     print("Ingrese el legajo del investigador a modificar:")
     legajo = int(input("Legajo: "))
     
+    investigador = buscarInvestigadorPorLegajo(legajo) 
     nombre = input("Ingrese el nombre del investigador: ")
     apellido = input("Ingrese el apellido del investigador: ")
     area = input("Ingrese el área de investigación: ")
@@ -84,6 +99,7 @@ def interfazGrafica():
     return
 
 def main():
+    interfazGrafica()
     return
 
 if __name__ == "__main__":
