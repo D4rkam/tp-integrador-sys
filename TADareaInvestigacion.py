@@ -2,33 +2,34 @@
 
 def crearAreaDeInvestigacion():
     # Crea un área de investigación
- pass
+    areainvestigacion=["", []]
+    return areainvestigacion #Devuelve un area de investigacion
 
 def verNombreAreaInvestigacion(areainvestigacion):
     #Retorna el nombre del Area de Investigacion
-    pass
-
-
+    return areainvestigacion[0]
+    
+    
 def agregarInvestigador(areainvestigacion, investigador):
     #Agrega al investigador al Área de investigacion
-    pass
+    areainvestigacion[1].append(investigador)
 
 
 def eliminarInvestigador(areainvestigacion, investigador):
     #Elimina al investigador del Área de Investigación
-    pass
+    areainvestigacion[1].remove(investigador)
 
 def existeInvestigador(areainvestigacion, investigador):
     #Retorna True o False si el investigador pertenece al Área de Investigacion
- pass
+ return investigador in areainvestigacion
 
 def tamanioAreaInvestigacion(areainvestigacion):
     #Retorna la cantidad de investigadores que hay en el Área de investigacion
-    pass
+    return len(areainvestigacion)
 
 def recuperarInvestigador(areainvestigacion, i):
     #Retorna el investigador de la posición iésima
-    pass
+    return areainvestigacion[i]
 
 
 
