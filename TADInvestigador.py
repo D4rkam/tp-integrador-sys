@@ -1,99 +1,98 @@
 # ==== Crear ====
 def crearInvestigador():
-    """Crea un investigador vacio"""
-    pass
+    """Crea y retorna investigador vacio"""
+    return ["", "", 0, "", 0]
 
 
 # ==== Carga de datos ====
 def cargarNombre(investigador, nombre):
     """Recibe un investigador le carga el nombre"""
-    pass
+    investigador[0] = nombre
 
 
 def cargarApellido(investigador, apellido):
     """Recibe un investigador le carga el apellido"""
-    pass
+    investigador[1] = apellido
 
 
 def cargarNroLegajo(investigador, num_legajo):
     """Recibe un investigador le carga el legajo"""
-
-    pass
+    investigador[2] = num_legajo
 
 
 def cargarFechaIngreso(investigador, fecha_ingreso):
     """Recibe un investigador le carga la fecha de ingreso"""
-
-    pass
+    investigador[3] = fecha_ingreso
 
 
 def cargarNroLab(investigador, num_laboratorio):
     """Recibe un investigador le carga el numero de lab"""
-
-    pass
+    investigador[3] = num_laboratorio
 
 
 # ==== Ver datos ====
 def verNombre(investigador):
     """Recibe un investigador y retorna su nombre"""
-    pass
+    return investigador[0]
 
 
 def verApellido(investigador):
     """Recibe un investigador y retorna su apellido"""
-    pass
+    return investigador[1]
 
 
 def verNroLegajo(investigador):
     """Recibe un investigador y retorna su numero de legajo"""
-
-    pass
+    return investigador[2]
 
 
 def verFechaIngreso(investigador):
     """Recibe un investigador y retorna su fecha de ingreso"""
-
-    pass
+    return investigador[3]
 
 
 def verNroLab(investigador):
     """Recibe un investigador y retorna su numero de laboratorio"""
 
-    pass
+    return investigador[4]
 
 
 # ==== Modificar datos ====
 def modificarNombre(investigador, nombre):
     """Recibe un investigador y modifica el nombre al nuevo recibido"""
 
-    pass
+    investigador[0] = nombre
 
 
 def modificarApellido(investigador, apellido):
     """Recibe un investigador y modifica el apellido al nuevo recibido"""
 
-    pass
+    investigador[1] = apellido
 
 
 def modificarNroLegajo(investigador, num_legajo):
     """Recibe un investigador y modifica el numero de legajo al nuevo recibido"""
 
-    pass
+    investigador[2] = num_legajo
 
 
 def modificarFechaIngreso(investigador, fecha_ingreso):
     """Recibe un investigador y modifica la fecha de ingreso al nuevo recibido"""
 
-    pass
+    investigador[3] = fecha_ingreso
 
 
 def modificarNroLab(investigador, num_lab):
     """Recibe un investigador y modifica el numero de laboratorio al nuevo recibido"""
 
-    pass
+    investigador[4] = num_lab
 
 
 def asignarInvestigador(investigador1, investigador2):
     """Copia los datos del investigar 1 al investigador 2"""
 
-    pass
+    investigador2[0] = investigador1[0]
+    investigador2[1] = investigador1[1]
+    investigador2[2] = investigador1[2]
+    investigador2[3] = investigador1[3]
+    investigador2[4] = investigador1[4]
