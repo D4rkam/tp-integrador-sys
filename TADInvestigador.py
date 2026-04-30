@@ -5,16 +5,17 @@ def crearInvestigador():
 
 
 # ==== Carga de datos ====
+# ==== Carga de Nombre ====
 def cargarNombre(investigador, nombre):
     """Recibe un investigador le carga el nombre"""
     investigador[0] = nombre
 
-
+# ==== Carga de apellido ====
 def cargarApellido(investigador, apellido):
     """Recibe un investigador le carga el apellido"""
     investigador[1] = apellido
 
-
+# ==== Carga de apellido ====
 def cargarNroLegajo(investigador, num_legajo):
     """Recibe un investigador le carga el legajo"""
     investigador[2] = num_legajo
