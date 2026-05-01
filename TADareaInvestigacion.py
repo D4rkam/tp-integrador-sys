@@ -5,6 +5,10 @@ def crearAreaDeInvestigacion():
     areainvestigacion=["", []]
     return areainvestigacion #Devuelve un area de investigacion
 
+def cargarAreaDeInvestigacion(areainvestigacion, nombre):
+    #Carga el nombre del área de investigación
+    areainvestigacion[0] = nombre
+
 def verNombreAreaInvestigacion(areainvestigacion):
     #Retorna el nombre del Area de Investigacion
     return areainvestigacion[0]

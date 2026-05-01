@@ -5,7 +5,7 @@ from datetime import date
 from os import system
 
 """
-TADi:
+TADInvestigador:
     - nombre: string
     - apellido: string
     - fecha_de_ingreso: date
