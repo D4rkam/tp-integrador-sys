@@ -8,7 +8,7 @@ from os import system
 TADi:
     - nombre: string
     - apellido: string
-    - anio_de_ingreso: date
+    - fecha_de_ingreso: date
     - laboratorio: int
     - legajo: int
 """
@@ -48,12 +48,7 @@ def interfazAgregarInvestigador():
     flag = True
     while flag: 
         clear()
-
-        legajo = int(input("Ingrese el legajo: "))
-        nombre = input("Ingrese el nombre del investigador: ")
-        apellido = input("Ingrese el apellido del investigador: ")
-        anioIngreso = int(input("Ingrese el año de ingreso: "))
-        nroLaboratorio = int(input("Ingrese el laboratorio: "))
+        print("--- Agregar Investigadores ---")
 
         print("Seleccione el área de investigación:")
         for i, area in enumerate(areas):
@@ -65,9 +60,28 @@ def interfazAgregarInvestigador():
             print("Opción no válida. Intente nuevamente.")
             input("Presione Enter para continuar...")
             continue
-        
+
+        legajo = int(input("Ingrese el legajo: "))
+        nombre = input("Ingrese el nombre del investigador: ")
+        apellido = input("Ingrese el apellido del investigador: ")
+        nroLaboratorio = int(input("Ingrese el laboratorio: "))
+
+        try:
+            anioIngreso = int(input("Ingrese el año de ingreso: "))
+            mesIngreso = int(input("Ingrese el mes de ingreso: "))
+            diaIngreso = int(input("Ingrese el día de ingreso: "))
+            fechaIngreso = date(anioIngreso, mesIngreso, diaIngreso)
+        except ValueError:
+            print("Fecha no válida. Intente nuevamente.")
+            input("Presione Enter para continuar...")
+            continue
+        except Exception as e:
+            print(f"Error: {e}. Intente nuevamente.")
+            input("Presione Enter para continuar...")
+            continue
+            
         nuevoInvestigador = TADi.crearInvestigador()
-        TADi.cargarInvestigador(nuevoInvestigador, nombre, apellido, legajo, anioIngreso, nroLaboratorio)
+        TADi.cargarInvestigador(nuevoInvestigador, nombre, apellido, legajo, fechaIngreso, nroLaboratorio)
 
         TADai.agregarInvestigador(areas[areaSeleccionada], nuevoInvestigador)
         print("Investigador agregado exitosamente.")
@@ -93,7 +107,7 @@ def interfazModificarInvestigador():
             print(f"¿Qué dato desea modificar del investigador {TADi.verNombre(investigador)} {TADi.verApellido(investigador)}?")
             print("1. Nombre")
             print("2. Apellido")
-            print("3. Año de ingreso")
+            print("3. Fecha de ingreso")
             print("4. Laboratorio")
 
             opcion = int(input("Opción: "))
@@ -106,8 +120,20 @@ def interfazModificarInvestigador():
                 TADi.modificarApellido(investigador, apellido)
 
             elif opcion == 3:
-                anioIngreso = int(input("Ingrese el año de ingreso: "))
-                TADi.modificarFechaIngreso(investigador, anioIngreso)
+                try:
+                    anioIngreso = int(input("Ingrese el año de ingreso: "))
+                    mesIngreso = int(input("Ingrese el mes de ingreso: "))
+                    diaIngreso = int(input("Ingrese el día de ingreso: "))
+                    fechaIngreso = date(anioIngreso, mesIngreso, diaIngreso)
+                    TADi.modificarFechaIngreso(investigador, fechaIngreso)
+                except ValueError:
+                    print("Fecha no válida. Intente nuevamente.")
+                    input("Presione Enter para continuar...")
+                    continue
+                except Exception as e:
+                    print(f"Error: {e}. Intente nuevamente.")
+                    input("Presione Enter para continuar...")
+                    continue
 
             elif opcion == 4:
                 nroLaboratorio = int(input("Ingrese el laboratorio: "))
@@ -172,7 +198,7 @@ def intefazMostrarPlantel():
 
             print(f" - {TADi.verNombre(investigador)} {TADi.verApellido(investigador)}")
             print(f"   Legajo: {TADi.verNroLegajo(investigador)}")
-            print(f"   Año de ingreso: {TADi.verFechaIngreso(investigador)}")
+            print(f"   Año de ingreso: {TADi.verFechaIngreso(investigador).year}")
             print(f"   Laboratorio: {TADi.verNroLab(investigador)}")
 
     input("\nPresione Enter para continuar...")
