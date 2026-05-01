@@ -16,6 +16,8 @@ TADInvestigador:
 
 areaQumica = TADai.crearAreaDeInvestigacion()
 areaBiologia = TADai.crearAreaDeInvestigacion()
+TADai.cargarAreaDeInvestigacion(areaQumica, "Química")
+TADai.cargarAreaDeInvestigacion(areaBiologia, "Biología")
 
 areas = [areaBiologia, areaQumica]
 
@@ -50,29 +52,29 @@ def interfazAgregarInvestigador():
         clear()
         print("--- Agregar Investigadores ---")
 
-        print("Seleccione el área de investigación:")
-        for i, area in enumerate(areas):
-            # 1. Area de investigacion quimica
-            # 2. Area de investigacion biologia
-            print(f"{i+1}. {TADai.verNombreAreaInvestigacion(area)}")
-        areaSeleccionada = int(input("Opción: ")) - 1
-        if areaSeleccionada < 0 or areaSeleccionada >= len(areas):
-            print("Opción no válida. Intente nuevamente.")
-            input("Presione Enter para continuar...")
-            continue
-
-        legajo = int(input("Ingrese el legajo: "))
-        nombre = input("Ingrese el nombre del investigador: ")
-        apellido = input("Ingrese el apellido del investigador: ")
-        nroLaboratorio = int(input("Ingrese el laboratorio: "))
-
         try:
+            print("Seleccione el área de investigación:")
+            for i, area in enumerate(areas):
+                # 1. Area de investigacion quimica
+                # 2. Area de investigacion biologia
+                print(f"{i+1}. {TADai.verNombreAreaInvestigacion(area)}")
+            areaSeleccionada = int(input("Opción: ")) - 1
+            if areaSeleccionada < 0 or areaSeleccionada >= len(areas):
+                print("Opción no válida. Intente nuevamente.")
+                input("Presione Enter para continuar...")
+                continue
+
+            legajo = int(input("Ingrese el legajo: "))
+            nombre = input("Ingrese el nombre del investigador: ")
+            apellido = input("Ingrese el apellido del investigador: ")
+            nroLaboratorio = int(input("Ingrese el laboratorio: "))
+
             anioIngreso = int(input("Ingrese el año de ingreso: "))
             mesIngreso = int(input("Ingrese el mes de ingreso: "))
             diaIngreso = int(input("Ingrese el día de ingreso: "))
             fechaIngreso = date(anioIngreso, mesIngreso, diaIngreso)
-        except ValueError:
-            print("Fecha no válida. Intente nuevamente.")
+        except ValueError as ve:
+            print(f"Opción no válida. Intente nuevamente. {ve}")
             input("Presione Enter para continuar...")
             continue
         except Exception as e:
@@ -292,6 +294,7 @@ def interfazGrafica():
             break
         else:
             print("Opción no válida. Intente nuevamente.")
+            input("Presione Enter para continuar...")
     return
 
 def main():
@@ -299,4 +302,7 @@ def main():
     return
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        print(f"Error inesperado: {e}")
