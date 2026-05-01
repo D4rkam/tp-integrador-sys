@@ -1,11 +1,11 @@
-import TADareaInvestigacion
-import TADInvestigador
+import TADareaInvestigacion as TADai
+import TADInvestigador as TADi
 # from TADCola import *
 from datetime import date
 from os import system
 
 """
-TADInvestigador:
+TADi:
     - nombre: string
     - apellido: string
     - anio_de_ingreso: date
@@ -14,8 +14,8 @@ TADInvestigador:
 """
 
 
-areaQumica = TADareaInvestigacion.crearAreaDeInvestigacion()
-areaBiologia = TADareaInvestigacion.crearAreaDeInvestigacion()
+areaQumica = TADai.crearAreaDeInvestigacion()
+areaBiologia = TADai.crearAreaDeInvestigacion()
 
 areas = [areaBiologia, areaQumica]
 
@@ -27,9 +27,9 @@ def clear():
 
 def buscarInvestigadorPorLegajo(legajo):
     for area in areas:
-        for j in range(TADareaInvestigacion.tamanioAreaInvestigacion(area)):
-            investigador = TADareaInvestigacion.recuperarInvestigador(area, j)
-            if TADInvestigador.verNroLegajo(investigador) == legajo:
+        for j in range(TADai.tamanioAreaInvestigacion(area)):
+            investigador = TADai.recuperarInvestigador(area, j)
+            if TADi.verNroLegajo(investigador) == legajo:
                 return investigador
     return None
 
@@ -59,17 +59,17 @@ def interfazAgregarInvestigador():
         for i, area in enumerate(areas):
             # 1. Area de investigacion quimica
             # 2. Area de investigacion biologia
-            print(f"{i+1}. {TADareaInvestigacion.verNombreAreaInvestigacion(area)}")
+            print(f"{i+1}. {TADai.verNombreAreaInvestigacion(area)}")
         areaSeleccionada = int(input("Opción: ")) - 1
         if areaSeleccionada < 0 or areaSeleccionada >= len(areas):
             print("Opción no válida. Intente nuevamente.")
             input("Presione Enter para continuar...")
             continue
         
-        nuevoInvestigador = TADInvestigador.crearInvestigador()
-        TADInvestigador.cargarInvestigador(nuevoInvestigador, nombre, apellido, legajo, anioIngreso, nroLaboratorio)
+        nuevoInvestigador = TADi.crearInvestigador()
+        TADi.cargarInvestigador(nuevoInvestigador, nombre, apellido, legajo, anioIngreso, nroLaboratorio)
 
-        TADareaInvestigacion.agregarInvestigador(areas[areaSeleccionada], nuevoInvestigador)
+        TADai.agregarInvestigador(areas[areaSeleccionada], nuevoInvestigador)
         print("Investigador agregado exitosamente.")
         continuar = input("¿Desea agregar otro investigador? (s/n): ")
         if continuar.lower() != "s":
@@ -90,7 +90,7 @@ def interfazModificarInvestigador():
             continue
 
         while True:
-            print(f"¿Qué dato desea modificar del investigador {TADInvestigador.verNombre(investigador)} {TADInvestigador.verApellido(investigador)}?")
+            print(f"¿Qué dato desea modificar del investigador {TADi.verNombre(investigador)} {TADi.verApellido(investigador)}?")
             print("1. Nombre")
             print("2. Apellido")
             print("3. Año de ingreso")
@@ -100,18 +100,18 @@ def interfazModificarInvestigador():
 
             if opcion == 1:
                 nombre = input("Ingrese el nombre del investigador: ")
-                TADInvestigador.modificarNombre(investigador, nombre)
+                TADi.modificarNombre(investigador, nombre)
             elif opcion == 2:
                 apellido = input("Ingrese el apellido del investigador: ")
-                TADInvestigador.modificarApellido(investigador, apellido)
+                TADi.modificarApellido(investigador, apellido)
 
             elif opcion == 3:
                 anioIngreso = int(input("Ingrese el año de ingreso: "))
-                TADInvestigador.modificarFechaIngreso(investigador, anioIngreso)
+                TADi.modificarFechaIngreso(investigador, anioIngreso)
 
             elif opcion == 4:
                 nroLaboratorio = int(input("Ingrese el laboratorio: "))
-                TADInvestigador.modificarNroLab(investigador, nroLaboratorio)
+                TADi.modificarNroLab(investigador, nroLaboratorio)
 
             else: 
                 print("Opción no válida. Intente nuevamente.")
@@ -144,12 +144,12 @@ def intefazBajaPersonal():
         eliminado = False
         for area in areas:
             i = 0
-            maxLen = TADareaInvestigacion.tamanioAreaInvestigacion(area)
+            maxLen = TADai.tamanioAreaInvestigacion(area)
             while i < maxLen:
-                investigadorActual = TADareaInvestigacion.recuperarInvestigador(area, i)
-                if TADInvestigador.verNroLegajo(investigadorActual) == legajo:
-                    TADareaInvestigacion.eliminarInvestigador(area, investigadorActual)
-                    print(f"Investigador {TADInvestigador.verNombre(investigadorActual)} {TADInvestigador.verApellido(investigadorActual)} eliminado exitosamente.")
+                investigadorActual = TADai.recuperarInvestigador(area, i)
+                if TADi.verNroLegajo(investigadorActual) == legajo:
+                    TADai.eliminarInvestigador(area, investigadorActual)
+                    print(f"Investigador {TADi.verNombre(investigadorActual)} {TADi.verApellido(investigadorActual)} eliminado exitosamente.")
                     eliminado = True
                     break
                 i += 1
@@ -166,14 +166,14 @@ def intefazMostrarPlantel():
     clear()
     print("--- Plantel de Investigadores ---")
     for area in areas:
-        print(f"\nÁrea de Investigación: {TADareaInvestigacion.verNombreAreaInvestigacion(area)}")
-        for j in range(TADareaInvestigacion.tamanioAreaInvestigacion(area)):
-            investigador = TADareaInvestigacion.recuperarInvestigador(area, j)
+        print(f"\nÁrea de Investigación: {TADai.verNombreAreaInvestigacion(area)}")
+        for j in range(TADai.tamanioAreaInvestigacion(area)):
+            investigador = TADai.recuperarInvestigador(area, j)
 
-            print(f" - {TADInvestigador.verNombre(investigador)} {TADInvestigador.verApellido(investigador)}")
-            print(f"   Legajo: {TADInvestigador.verNroLegajo(investigador)}")
-            print(f"   Año de ingreso: {TADInvestigador.verFechaIngreso(investigador)}")
-            print(f"   Laboratorio: {TADInvestigador.verNroLab(investigador)}")
+            print(f" - {TADi.verNombre(investigador)} {TADi.verApellido(investigador)}")
+            print(f"   Legajo: {TADi.verNroLegajo(investigador)}")
+            print(f"   Año de ingreso: {TADi.verFechaIngreso(investigador)}")
+            print(f"   Laboratorio: {TADi.verNroLab(investigador)}")
 
     input("\nPresione Enter para continuar...")
 
@@ -184,7 +184,7 @@ def interfazReasignacionMasiva():
 
 
     for i, area in enumerate(areas):
-        print(f"{i+1}. {TADareaInvestigacion.verNombreAreaInvestigacion(area)}")
+        print(f"{i+1}. {TADai.verNombreAreaInvestigacion(area)}")
     
     areaAModificar = -1
     while areaAModificar < 0 or areaAModificar >= len(areas):
@@ -202,7 +202,7 @@ def interfazReasignacionMasiva():
     while areaDestino < 0 or areaDestino >= len(areas):
         for i, area in enumerate(areas):
             if i != areaAModificar:
-                print(f"{i+1}. {TADareaInvestigacion.verNombreAreaInvestigacion(area)}")
+                print(f"{i+1}. {TADai.verNombreAreaInvestigacion(area)}")
         areaDestino = int(input("Opción: ")) - 1
 
         if areaDestino < 0 or areaDestino >= len(areas) or areaDestino == areaAModificar:
