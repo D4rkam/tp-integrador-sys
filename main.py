@@ -223,6 +223,8 @@ def interfazReasignacionMasiva():
     
     clear()
 
+    anioIngreso = int(input("Ingrese el año de inicio de los investigadores a reasignar: "))
+
     print("Seleccione el área de investigación destino:")
     areaDestino = -1
     while areaDestino < 0 or areaDestino >= len(areas):
@@ -236,7 +238,29 @@ def interfazReasignacionMasiva():
             input("Presione Enter para continuar...")
             continue
 
-    anioIngreso = int(input("Ingrese el año de inicio de los investigadores a reasignar: "))
+    listadoReasignados = []
+    i = 0
+    maxLen = TADai.tamanioAreaInvestigacion(areas[areaAModificar])
+    while i < maxLen:
+        investigadorActual = TADai.recuperarInvestigador(areas[areaAModificar], i)
+        if TADi.verFechaIngreso(investigadorActual).year == anioIngreso:
+            listadoReasignados.append(investigadorActual)
+            TADai.eliminarInvestigador(areas[areaAModificar], investigadorActual)
+            TADai.agregarInvestigador(areas[areaDestino], investigadorActual)
+            maxLen -= 1
+        else:
+            i += 1
+    
+    print(f"\nInvestigadores reasignados del año {anioIngreso}:")
+    for reasignado in listadoReasignados:
+        print(f" - {TADi.verNombre(reasignado)} {TADi.verApellido(reasignado)}")
+        print(f"   Legajo: {TADi.verNroLegajo(reasignado)}")
+        print(f"   Año de ingreso: {TADi.verFechaIngreso(reasignado).year}")
+        print(f"   Laboratorio: {TADi.verNroLab(reasignado)}")
+        print("------------------------------")
+
+    print("Reasignación masiva completada exitosamente.")
+    input("Presione Enter para continuar...")
 
     
 
