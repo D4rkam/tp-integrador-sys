@@ -21,6 +21,7 @@ TADai.cargarAreaDeInvestigacion(areaQumica, "Química")
 TADai.cargarAreaDeInvestigacion(areaBiologia, "Biología")
 
 areas = [areaBiologia, areaQumica]
+colas = {}
 
 def clear():
     if os.name == "nt":
@@ -191,22 +192,27 @@ def intefazBajaPersonal():
         if continuar.lower() != "s":
             flag = False
 
+def imprimirPlantelArea(area):
+    print(f"\nÁrea de Investigación: {TADai.verNombreAreaInvestigacion(area)}")
+    if TADai.tamanioAreaInvestigacion(area) == 0:
+        print("No hay investigadores en esta área.")
+        input("Presione Enter para continuar...")
+        return
+    print(f"{"":<3} {'Nombre y apellido':<25} {'Legajo':<10} {'Año de ingreso':<15} {'Laboratorio':<10}")
+    for j in range(TADai.tamanioAreaInvestigacion(area)):
+        investigador = TADai.recuperarInvestigador(area, j)
+        nombre = TADi.verNombre(investigador) + " " + TADi.verApellido(investigador)
+        legajo = TADi.verNroLegajo(investigador)
+        fechaDeIngreso = f"{TADi.verFechaIngreso(investigador).day}/{TADi.verFechaIngreso(investigador).month}/{TADi.verFechaIngreso(investigador).year}"
+        nroLaboratorio = TADi.verNroLab(investigador)
+        print(f"{j+1:<3} {nombre:<25} {legajo:<10} {fechaDeIngreso:<15} {nroLaboratorio:<10}")
+
 def intefazMostrarPlantel():
     clear()
     print("--- Plantel de Investigadores ---")
 
     for area in areas:
-        print(f"\nÁrea de Investigación: {TADai.verNombreAreaInvestigacion(area)}")
-        if TADai.tamanioAreaInvestigacion(area) == 0:
-            continue
-        print(f"{'Nombre y apellido':<25} {'Legajo':<10} {'Año de ingreso':<15} {'Laboratorio':<10}")
-        for j in range(TADai.tamanioAreaInvestigacion(area)):
-            investigador = TADai.recuperarInvestigador(area, j)
-            nombre = TADi.verNombre(investigador) + " " + TADi.verApellido(investigador)
-            legajo = TADi.verNroLegajo(investigador)
-            fechaDeIngreso = f"{TADi.verFechaIngreso(investigador).day}/{TADi.verFechaIngreso(investigador).month}/{TADi.verFechaIngreso(investigador).year}"
-            nroLaboratorio = TADi.verNroLab(investigador)
-            print(f"{nombre:<25} {legajo:<10} {fechaDeIngreso:<15} {nroLaboratorio:<10}")
+        imprimirPlantelArea(area)
 
     input("\nPresione Enter para continuar...")
 
@@ -277,6 +283,7 @@ def interfazReasignacionMasiva():
     input("Presione Enter para continuar...")
 
 def interfazVerCola(areaDeInvestigacion):
+
     clear()
 
 def interfazModificarCola():
@@ -290,7 +297,7 @@ def interfazColaPresupuestos():
         print("--- Cola para presupuestos anuales ---")
         for i, area in enumerate(areas):
             print(f"{i+1}. {TADai.verNombreAreaInvestigacion(area)}")
-        areaSeleccionada = areas[int(input("Seleccione un área de investigación: ")) - 1]
+        areaSeleccionada = int(input("Seleccione un área de investigación: ")) - 1
         
         clear()
 
