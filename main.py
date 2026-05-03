@@ -203,8 +203,10 @@ def intefazMostrarPlantel():
             # print(investigador)
             print(f" - {TADi.verNombre(investigador)} {TADi.verApellido(investigador)}")
             print(f"   Legajo: {TADi.verNroLegajo(investigador)}")
-            print(f"   Año de ingreso: {TADi.verFechaIngreso(investigador)}")
+            print(f"   Año de ingreso: {TADi.verFechaIngreso(investigador).year}")
             print(f"   Laboratorio: {TADi.verNroLab(investigador)}")
+            print("------------------------------")
+
 
     input("\nPresione Enter para continuar...")
 
@@ -228,8 +230,6 @@ def interfazReasignacionMasiva():
     
     clear()
 
-    anioIngreso = int(input("Ingrese el año de inicio de los investigadores a reasignar: "))
-
     print("Seleccione el área de investigación destino:")
     areaDestino = -1
     while areaDestino < 0 or areaDestino >= len(areas):
@@ -242,6 +242,10 @@ def interfazReasignacionMasiva():
             print("Opción no válida. Intente nuevamente.")
             input("Presione Enter para continuar...")
             continue
+
+    clear()
+
+    anioIngreso = int(input("Ingrese el año de inicio de los investigadores a reasignar: "))
 
     listadoReasignados = []
     i = 0
@@ -256,6 +260,11 @@ def interfazReasignacionMasiva():
         else:
             i += 1
     
+    if len(listadoReasignados) == 0:
+        print(f"No se encontraron investigadores con año de ingreso {anioIngreso} en el área de investigación {TADai.verNombreAreaInvestigacion(areas[areaAModificar])}.")
+        input("Presione Enter para continuar...")
+        return
+
     print(f"\nInvestigadores reasignados del año {anioIngreso}:")
     for reasignado in listadoReasignados:
         print(f" - {TADi.verNombre(reasignado)} {TADi.verApellido(reasignado)}")
