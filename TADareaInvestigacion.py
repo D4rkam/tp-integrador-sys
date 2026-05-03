@@ -25,15 +25,15 @@ def eliminarInvestigador(areainvestigacion, investigador):
 
 def existeInvestigador(areainvestigacion, investigador):
     #Retorna True o False si el investigador pertenece al Área de Investigacion
- return investigador in areainvestigacion
+ return investigador in areainvestigacion[1]
 
 def tamanioAreaInvestigacion(areainvestigacion):
     #Retorna la cantidad de investigadores que hay en el Área de investigacion
-    return len(areainvestigacion)
+    return len(areainvestigacion[1])
 
 def recuperarInvestigador(areainvestigacion, i):
     #Retorna el investigador de la posición iésima
-    return areainvestigacion[i]
+    return areainvestigacion[1][i]
 
 
 

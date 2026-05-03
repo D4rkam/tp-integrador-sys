@@ -195,12 +195,15 @@ def intefazMostrarPlantel():
     print("--- Plantel de Investigadores ---")
     for area in areas:
         print(f"\nÁrea de Investigación: {TADai.verNombreAreaInvestigacion(area)}")
+        if TADai.tamanioAreaInvestigacion(area) == 0:
+            continue
         for j in range(TADai.tamanioAreaInvestigacion(area)):
+            # print(area)
             investigador = TADai.recuperarInvestigador(area, j)
-
+            # print(investigador)
             print(f" - {TADi.verNombre(investigador)} {TADi.verApellido(investigador)}")
             print(f"   Legajo: {TADi.verNroLegajo(investigador)}")
-            print(f"   Año de ingreso: {TADi.verFechaIngreso(investigador).year}")
+            print(f"   Año de ingreso: {TADi.verFechaIngreso(investigador)}")
             print(f"   Laboratorio: {TADi.verNroLab(investigador)}")
 
     input("\nPresione Enter para continuar...")
