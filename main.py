@@ -67,7 +67,7 @@ def interfazAgregarInvestigador():
             legajo = int(input("Ingrese el legajo: "))
             nombre = input("Ingrese el nombre del investigador: ")
             apellido = input("Ingrese el apellido del investigador: ")
-            nroLaboratorio = int(input("Ingrese el laboratorio: "))
+            nroLaboratorio = int(input("Ingrese el n° de laboratorio: "))
 
             anioIngreso = int(input("Ingrese el año de ingreso: "))
             mesIngreso = int(input("Ingrese el mes de ingreso: "))
@@ -138,7 +138,7 @@ def interfazModificarInvestigador():
                     continue
 
             elif opcion == 4:
-                nroLaboratorio = int(input("Ingrese el laboratorio: "))
+                nroLaboratorio = int(input("Ingrese el n° de laboratorio: "))
                 TADi.modificarNroLab(investigador, nroLaboratorio)
 
             else: 
