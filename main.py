@@ -194,6 +194,7 @@ def intefazBajaPersonal():
 def intefazMostrarPlantel():
     clear()
     print("--- Plantel de Investigadores ---")
+
     for area in areas:
         print(f"\nÁrea de Investigación: {TADai.verNombreAreaInvestigacion(area)}")
         if TADai.tamanioAreaInvestigacion(area) == 0:
@@ -206,7 +207,6 @@ def intefazMostrarPlantel():
             anioIngreso = TADi.verFechaIngreso(investigador).year
             nroLaboratorio = TADi.verNroLab(investigador)
             print(f"{nombre:<25} {legajo:<10} {anioIngreso:<15} {nroLaboratorio:<10}")
-
 
     input("\nPresione Enter para continuar...")
 
