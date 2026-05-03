@@ -2,7 +2,8 @@ import TADareaInvestigacion as TADai
 import TADInvestigador as TADi
 # from TADCola import *
 from datetime import date
-from os import system
+import os
+import platform
 
 """
 TADInvestigador:
@@ -22,10 +23,10 @@ TADai.cargarAreaDeInvestigacion(areaBiologia, "Biología")
 areas = [areaBiologia, areaQumica]
 
 def clear():
-    if system == "nt":
-        system("cls")
+    if os.name == "nt":
+        os.system("cls")
     else:
-        system("clear")
+        os.system("clear")
 
 def buscarInvestigadorPorLegajo(legajo):
     for area in areas:
@@ -42,7 +43,7 @@ def menuPrincipal():
     print("3. Baja de personal")
     print("4. Mostrar plantel de investigadores")
     print("5. Reasignación masiva por año de ingreso")
-    print("6. Generar cola para presupuestos anuales")
+    print("6. Cola para presupuestos anuales")
     print("7. Salir")    
     return int(input("Seleccione una opción: "))
 
@@ -197,15 +198,14 @@ def intefazMostrarPlantel():
         print(f"\nÁrea de Investigación: {TADai.verNombreAreaInvestigacion(area)}")
         if TADai.tamanioAreaInvestigacion(area) == 0:
             continue
+        print(f"{'Nombre y apellido':<25} {'Legajo':<10} {'Año de ingreso':<15} {'Laboratorio':<10}")
         for j in range(TADai.tamanioAreaInvestigacion(area)):
-            # print(area)
             investigador = TADai.recuperarInvestigador(area, j)
-            # print(investigador)
-            print(f" - {TADi.verNombre(investigador)} {TADi.verApellido(investigador)}")
-            print(f"   Legajo: {TADi.verNroLegajo(investigador)}")
-            print(f"   Año de ingreso: {TADi.verFechaIngreso(investigador).year}")
-            print(f"   Laboratorio: {TADi.verNroLab(investigador)}")
-            print("------------------------------")
+            nombre = TADi.verNombre(investigador) + " " + TADi.verApellido(investigador)
+            legajo = TADi.verNroLegajo(investigador)
+            anioIngreso = TADi.verFechaIngreso(investigador).year
+            nroLaboratorio = TADi.verNroLab(investigador)
+            print(f"{nombre:<25} {legajo:<10} {anioIngreso:<15} {nroLaboratorio:<10}")
 
 
     input("\nPresione Enter para continuar...")
@@ -276,13 +276,40 @@ def interfazReasignacionMasiva():
     print("Reasignación masiva completada exitosamente.")
     input("Presione Enter para continuar...")
 
-    
+def interfazVerCola(areaDeInvestigacion):
+    clear()
 
-def interfazGenerarColaPresupuestos():
+def interfazModificarCola():
+    pass
+
+def interfazColaPresupuestos():
     flag = True
     while flag:
         clear()
-        pass
+        
+        print("--- Cola para presupuestos anuales ---")
+        for i, area in enumerate(areas):
+            print(f"{i+1}. {TADai.verNombreAreaInvestigacion(area)}")
+        areaSeleccionada = areas[int(input("Seleccione un área de investigación: ")) - 1]
+        
+        clear()
+
+        while True:
+            print("1. Ver Cola")
+            print("2. Modificar Cola")
+            print("3. Volver al menú principal")
+            opcion = int(input("Opción: "))
+            if opcion == 1:
+                interfazVerCola(areaSeleccionada)
+            elif opcion == 2:
+                interfazModificarCola()
+            elif opcion == 3:
+                break
+            else:
+                print("Opción no válida. Intente nuevamente.")
+                input("Presione Enter para continuar...")
+
+        print("")
 
 def interfazGrafica():
     while True:
@@ -300,7 +327,7 @@ def interfazGrafica():
         elif opcion == 5:
             interfazReasignacionMasiva()
         elif opcion == 6:
-            interfazGenerarColaPresupuestos()
+            interfazColaPresupuestos()
         elif opcion == 7:
             print("Saliendo del programa...")
             break
