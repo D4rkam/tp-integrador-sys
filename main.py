@@ -45,7 +45,7 @@ def menuPrincipal():
     print("5. Reasignación masiva por año de ingreso")
     print("6. Cola para presupuestos anuales")
     print("7. Salir")    
-    return int(input("Seleccione una opción: "))
+    return input("Seleccione una opción: ")
 
 def interfazAgregarInvestigador():
     flag = True
@@ -204,9 +204,9 @@ def intefazMostrarPlantel():
             investigador = TADai.recuperarInvestigador(area, j)
             nombre = TADi.verNombre(investigador) + " " + TADi.verApellido(investigador)
             legajo = TADi.verNroLegajo(investigador)
-            anioIngreso = TADi.verFechaIngreso(investigador).year
+            fechaDeIngreso = f"{TADi.verFechaIngreso(investigador).day}/{TADi.verFechaIngreso(investigador).month}/{TADi.verFechaIngreso(investigador).year}"
             nroLaboratorio = TADi.verNroLab(investigador)
-            print(f"{nombre:<25} {legajo:<10} {anioIngreso:<15} {nroLaboratorio:<10}")
+            print(f"{nombre:<25} {legajo:<10} {fechaDeIngreso:<15} {nroLaboratorio:<10}")
 
     input("\nPresione Enter para continuar...")
 
@@ -316,19 +316,19 @@ def interfazGrafica():
         clear()
         opcion = menuPrincipal()
         
-        if opcion == 1:
+        if opcion == "1":
             interfazAgregarInvestigador()
-        elif opcion == 2:
+        elif opcion == "2":
             interfazModificarInvestigador()
-        elif opcion == 3:
+        elif opcion == "3":
             intefazBajaPersonal()
-        elif opcion == 4:
+        elif opcion == "4":
             intefazMostrarPlantel()
-        elif opcion == 5:
+        elif opcion == "5":
             interfazReasignacionMasiva()
-        elif opcion == 6:
+        elif opcion == "6":
             interfazColaPresupuestos()
-        elif opcion == 7:
+        elif opcion == "7":
             print("Saliendo del programa...")
             break
         else:
