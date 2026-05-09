@@ -2,38 +2,38 @@
 
 def crearAreaDeInvestigacion():
     # Crea un área de investigación
-    areainvestigacion=["", []]
-    return areainvestigacion #Devuelve un area de investigacion
+    areaInvestigacion=["", []]
+    return areaInvestigacion #Devuelve un area de investigacion
 
-def cargarAreaDeInvestigacion(areainvestigacion, nombre):
+def cargarAreaDeInvestigacion(areaInvestigacion, nombre):
     #Carga el nombre del área de investigación
-    areainvestigacion[0] = nombre
+    areaInvestigacion[0] = nombre
 
-def verNombreAreaInvestigacion(areainvestigacion):
+def verNombreAreaInvestigacion(areaInvestigacion):
     #Retorna el nombre del Area de Investigacion
-    return areainvestigacion[0]
-    
-    
-def agregarInvestigador(areainvestigacion, investigador):
+    return areaInvestigacion[0]
+
+
+def agregarInvestigador(areaInvestigacion, investigador):
     #Agrega al investigador al Área de investigacion
-    areainvestigacion[1].append(investigador)
+    areaInvestigacion[1].append(investigador)
 
 
-def eliminarInvestigador(areainvestigacion, investigador):
+def eliminarInvestigador(areaInvestigacion, investigador):
     #Elimina al investigador del Área de Investigación
-    areainvestigacion[1].remove(investigador)
+    areaInvestigacion[1].remove(investigador)
 
-def existeInvestigador(areainvestigacion, investigador):
+def existeInvestigador(areaInvestigacion, investigador):
     #Retorna True o False si el investigador pertenece al Área de Investigacion
- return investigador in areainvestigacion[1]
+ return investigador in areaInvestigacion[1]
 
-def tamanioAreaInvestigacion(areainvestigacion):
+def tamanioAreaInvestigacion(areaInvestigacion):
     #Retorna la cantidad de investigadores que hay en el Área de investigacion
-    return len(areainvestigacion[1])
+    return len(areaInvestigacion[1])
 
-def recuperarInvestigador(areainvestigacion, i):
+def recuperarInvestigador(areaInvestigacion, i):
     #Retorna el investigador de la posición iésima
-    return areainvestigacion[1][i]
+    return areaInvestigacion[1][i]
 
 
 

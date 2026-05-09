@@ -283,8 +283,10 @@ def interfazReasignacionMasiva():
     input("Presione Enter para continuar...")
 
 def interfazVerCola(areaDeInvestigacion):
-
     clear()
+    print(f"Cola de presupuestos para el área de investigación {TADai.verNombreAreaInvestigacion(areas[areaDeInvestigacion])}:")
+    if areaDeInvestigacion not in colas or len(colas[areaDeInvestigacion]) == 0:
+        print("La cola está vacía.")
 
 def interfazModificarCola():
     pass
