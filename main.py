@@ -3,7 +3,7 @@ import TADInvestigador as TADi
 # from TADCola import *
 from datetime import date
 import os
-import platform
+from random import randint 
 
 """
 TADInvestigador:
@@ -22,6 +22,34 @@ TADai.cargarAreaDeInvestigacion(areaBiologia, "Biología")
 
 areas = [areaBiologia, areaQumica]
 colas = {}
+
+
+def cargaInicial():
+    nombres = ["Juan", "María", "Carlos", "Ana", "Luis", "Sofía", "Miguel", "Lucía", "Diego", "Valentina", "Santiago", "Manuel", "Thomas", "Ezequiel"]
+    apellidos = ["García", "Rodríguez", "López", "Martínez", "Pérez", "Gómez", "Sánchez", "Díaz", "Fernández", "Torres", "Silva", "Talone", "Linares", "Barrios"]
+    for i in range(20):
+        nombre = nombres[randint(0, len(nombres)-1)]
+        apellido = apellidos[randint(0, len(apellidos)-1)]
+        legajo = randint(30000, 39999)
+        while buscarInvestigadorPorLegajo(legajo) is not None:
+            legajo = randint(30000, 39999)
+        anioIngreso = randint(1950, 2023)
+        mesIngreso = randint(1, 12)
+        if mesIngreso == 2:
+            diaIngreso = randint(1, 28)
+        if mesIngreso in [4, 6, 9, 11]:
+            diaIngreso = randint(1, 30)
+        else:
+            diaIngreso = randint(1, 31)
+        fechaIngreso = date(anioIngreso, mesIngreso, diaIngreso)
+        nroLaboratorio = randint(1, 10)
+
+        nuevoInvestigador = TADi.crearInvestigador()
+        TADi.cargarInvestigador(nuevoInvestigador, nombre, apellido, legajo, fechaIngreso, nroLaboratorio)
+
+        areaSeleccionada = areas[randint(0, len(areas)-1)]
+        TADai.agregarInvestigador(areaSeleccionada, nuevoInvestigador)
+
 
 def clear():
     if os.name == "nt":
@@ -113,38 +141,40 @@ def interfazModificarInvestigador():
             print("2. Apellido")
             print("3. Fecha de ingreso")
             print("4. Laboratorio")
+            try:
+                opcion = int(input("Opción: "))
 
-            opcion = int(input("Opción: "))
+                if opcion == 1:
+                    nombre = input("Ingrese el nombre del investigador: ")
+                    TADi.modificarNombre(investigador, nombre)
+                elif opcion == 2:
+                    apellido = input("Ingrese el apellido del investigador: ")
+                    TADi.modificarApellido(investigador, apellido)
 
-            if opcion == 1:
-                nombre = input("Ingrese el nombre del investigador: ")
-                TADi.modificarNombre(investigador, nombre)
-            elif opcion == 2:
-                apellido = input("Ingrese el apellido del investigador: ")
-                TADi.modificarApellido(investigador, apellido)
+                elif opcion == 3:
+                        #TODO: Cambiar por dd/mm/yyyy
+                        # date.fromisoformat()
+                        anioIngreso = int(input("Ingrese el año de ingreso: "))
+                        mesIngreso = int(input("Ingrese el mes de ingreso: "))
+                        diaIngreso = int(input("Ingrese el día de ingreso: "))
+                        fechaIngreso = date(anioIngreso, mesIngreso, diaIngreso)
+                        TADi.modificarFechaIngreso(investigador, fechaIngreso)
 
-            elif opcion == 3:
-                try:
-                    anioIngreso = int(input("Ingrese el año de ingreso: "))
-                    mesIngreso = int(input("Ingrese el mes de ingreso: "))
-                    diaIngreso = int(input("Ingrese el día de ingreso: "))
-                    fechaIngreso = date(anioIngreso, mesIngreso, diaIngreso)
-                    TADi.modificarFechaIngreso(investigador, fechaIngreso)
-                except ValueError:
-                    print("Fecha no válida. Intente nuevamente.")
+                elif opcion == 4:
+                    nroLaboratorio = int(input("Ingrese el n° de laboratorio: "))
+                    TADi.modificarNroLab(investigador, nroLaboratorio)
+
+                else: 
+                    print("Opción no válida. Intente nuevamente.")
                     input("Presione Enter para continuar...")
                     continue
-                except Exception as e:
-                    print(f"Error: {e}. Intente nuevamente.")
-                    input("Presione Enter para continuar...")
-                    continue
 
-            elif opcion == 4:
-                nroLaboratorio = int(input("Ingrese el n° de laboratorio: "))
-                TADi.modificarNroLab(investigador, nroLaboratorio)
-
-            else: 
-                print("Opción no válida. Intente nuevamente.")
+            except ValueError as ve:
+                print(f"Entrada no válida. Intente nuevamente. {ve}")
+                input("Presione Enter para continuar...")
+                continue
+            except Exception as e:
+                print(f"Error: {e}. Intente nuevamente.")
                 input("Presione Enter para continuar...")
                 continue
 
@@ -346,6 +376,7 @@ def interfazGrafica():
     return
 
 def main():
+    cargaInicial()
     interfazGrafica()
     return
 
