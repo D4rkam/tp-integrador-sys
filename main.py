@@ -2,6 +2,7 @@ import TADareaInvestigacion as TADai
 import TADInvestigador as TADi
 # from TADCola import *
 from datetime import date
+from dateutil.relativedelta import relativedelta
 import os
 from random import randint 
 
@@ -24,10 +25,10 @@ areas = [areaBiologia, areaQumica]
 colas = {}
 
 
-def cargaInicial():
+def cargaInicial(cantidad=20):
     nombres = ["Juan", "María", "Carlos", "Ana", "Luis", "Sofía", "Miguel", "Lucía", "Diego", "Valentina", "Santiago", "Manuel", "Thomas", "Ezequiel"]
     apellidos = ["García", "Rodríguez", "López", "Martínez", "Pérez", "Gómez", "Sánchez", "Díaz", "Fernández", "Torres", "Silva", "Talone", "Linares", "Barrios"]
-    for i in range(20):
+    for i in range(cantidad):
         nombre = nombres[randint(0, len(nombres)-1)]
         apellido = apellidos[randint(0, len(apellidos)-1)]
         legajo = randint(30000, 39999)
@@ -49,7 +50,6 @@ def cargaInicial():
 
         areaSeleccionada = areas[randint(0, len(areas)-1)]
         TADai.agregarInvestigador(areaSeleccionada, nuevoInvestigador)
-
 
 def clear():
     if os.name == "nt":
@@ -73,7 +73,8 @@ def menuPrincipal():
     print("4. Mostrar plantel de investigadores")
     print("5. Reasignación masiva por año de ingreso")
     print("6. Cola para presupuestos anuales")
-    print("7. Salir")    
+    print("7. Eliminar investigadores por antigüedad")
+    print("8. Salir")    
     return input("Seleccione una opción: ")
 
 def interfazAgregarInvestigador():
@@ -350,6 +351,24 @@ def interfazColaPresupuestos():
 
         print("")
 
+def eliminarPorAntiguedad():
+    fechaActual = date.today()
+    eliminados = []
+    for area in areas:
+        i = 0
+        maxLen = TADai.tamanioAreaInvestigacion(area)
+        while i < maxLen:
+            investigadorActual = TADai.recuperarInvestigador(area, i)
+            if relativedelta(fechaActual, TADi.verFechaIngreso(investigadorActual)).years >= 30:
+                TADai.eliminarInvestigador(area, investigadorActual)
+                eliminados.append(investigadorActual)
+                maxLen -= 1
+            else:
+                i += 1
+    for eliminado in eliminados:
+        print(f"Investigador {TADi.verNombre(eliminado)} {TADi.verApellido(eliminado)} eliminado por antigüedad.")
+    print(f"Se eliminaron {len(eliminados)} investigadores.")
+
 def interfazGrafica():
     while True:
         clear()
@@ -368,6 +387,8 @@ def interfazGrafica():
         elif opcion == "6":
             interfazColaPresupuestos()
         elif opcion == "7":
+            eliminarPorAntiguedad()
+        elif opcion == "8":
             print("Saliendo del programa...")
             break
         else:
