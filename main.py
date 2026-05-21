@@ -349,7 +349,7 @@ def eliminarPorAntiguedad():
 
             diferencia = fechaActual - (timedelta(days=365*30) + TADi.verFechaIngreso(investigadorActual))
 
-            if diferencia.years >= 30:
+            if diferencia.years >= 0:
                 TADai.eliminarInvestigador(area, investigadorActual)
                 eliminados.append(investigadorActual)
                 maxLen -= 1
