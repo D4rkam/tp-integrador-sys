@@ -1,6 +1,6 @@
 import TADareaInvestigacion as TADai
 import TADInvestigador as TADi
-# from TADCola import *
+import TADcola
 from datetime import date, timedelta
 import os
 from random import randint 
@@ -33,11 +33,11 @@ def cargaInicial(cantidad=20):
         legajo = randint(30000, 39999)
         while buscarInvestigadorPorLegajo(legajo) is not None:
             legajo = randint(30000, 39999)
-        anioIngreso = randint(1950, 2023)
+        anioIngreso = randint(1980, 2025)
         mesIngreso = randint(1, 12)
         if mesIngreso == 2:
             diaIngreso = randint(1, 28)
-        if mesIngreso in [4, 6, 9, 11]:
+        elif mesIngreso in [4, 6, 9, 11]:
             diaIngreso = randint(1, 30)
         else:
             diaIngreso = randint(1, 31)
@@ -76,13 +76,16 @@ def interfazAgregarInvestigador():
                 # 1. Area de investigacion quimica
                 # 2. Area de investigacion biologia
                 print(f"{i+1}. {TADai.verNombreAreaInvestigacion(area)}")
+            print("0. Volver al menú principal")
             areaSeleccionada = int(input("Opción: ")) - 1
+            if areaSeleccionada == -1:
+                break
             if areaSeleccionada < 0 or areaSeleccionada >= len(areas):
-                print("Opción no válida. Intente nuevamente.")
-                input("Presione Enter para continuar...")
-                continue
+                raise ValueError("Indice de área no válido. Intente nuevamente.")
 
             legajo = int(input("Ingrese el legajo: "))
+            if legajo <= 0:
+                raise ValueError("El legajo tiene que mayor a 0.")
             nombre = input("Ingrese el nombre del investigador: ")
             apellido = input("Ingrese el apellido del investigador: ")
             nroLaboratorio = int(input("Ingrese el n° de laboratorio: "))
@@ -114,9 +117,11 @@ def interfazModificarInvestigador():
     while flag:
         clear()
         print("--- Modificar Investigadores ---")
-        print("Ingrese el legajo del investigador a modificar:")
+        print("Ingrese el legajo del investigador a modificar (ingrese 0 para volver al menú principal):")
         legajo = int(input("Legajo: "))
-        
+        if legajo == 0:
+            break
+
         investigador = buscarInvestigadorPorLegajo(legajo) 
         if investigador is None:
             print("Investigador no encontrado.")
@@ -180,9 +185,11 @@ def intefazBajaPersonal():
     while flag:
         clear()
         print("--- Eliminar Investigadores ---")
-        print("Ingrese el legajo del investigador a modificar:")
+        print("Ingrese el legajo del investigador a modificar (ingrese 0 para volver al menú principal):")
         legajo = int(input("Legajo: "))
-        
+        if legajo == 0:
+            break
+
         # investigador = buscarInvestigadorPorLegajo(legajo) 
         # if investigador is None:
         #     print("Investigador no encontrado.")
@@ -214,7 +221,6 @@ def imprimirPlantelArea(area):
     print(f"\nÁrea de Investigación: {TADai.verNombreAreaInvestigacion(area)}")
     if TADai.tamanioAreaInvestigacion(area) == 0:
         print("No hay investigadores en esta área.")
-        input("Presione Enter para continuar...")
         return
     print(f"{"":<3} {'Nombre y apellido':<25} {'Legajo':<10} {'Año de ingreso':<15} {'Laboratorio':<10}")
     for j in range(TADai.tamanioAreaInvestigacion(area)):
@@ -235,42 +241,42 @@ def intefazMostrarPlantel():
     input("\nPresione Enter para continuar...")
 
 def interfazReasignacionMasiva():
-    clear()
-    print("--- Reasignación masiva por año de ingreso ---")
-    print("Seleccione el área de investigación a modificar:")
-
-
-    for i, area in enumerate(areas):
-        print(f"{i+1}. {TADai.verNombreAreaInvestigacion(area)}")
-    
-    areaAModificar = -1
-    while areaAModificar < 0 or areaAModificar >= len(areas):
-        areaAModificar = int(input("Opción: ")) - 1
-
-        if areaAModificar < 0 or areaAModificar >= len(areas):
-            print("Opción no válida. Intente nuevamente.")
-            input("Presione Enter para continuar...")
-            continue
-    
-    clear()
-
-    print("Seleccione el área de investigación destino:")
-    areaDestino = -1
-    while areaDestino < 0 or areaDestino >= len(areas):
-        for i, area in enumerate(areas):
-            if i != areaAModificar:
+    areaAModificar, areaDestino = None, None
+    while True:
+        clear()
+        print("--- Reasignación masiva por año de ingreso ---")
+        print("Seleccione el área de investigación a modificar:")
+        try:
+            for i, area in enumerate(areas):
                 print(f"{i+1}. {TADai.verNombreAreaInvestigacion(area)}")
-        areaDestino = int(input("Opción: ")) - 1
+            print("0. Volver al menú principal")
+            areaAModificar = int(input("Opción: ")) - 1
+            if areaAModificar == -1:
+                return
+            if areaAModificar < 0 or areaAModificar >= len(areas):
+                raise ValueError("Indice de área no válido. Intente nuevamente.")
+            
+            clear()
 
-        if areaDestino < 0 or areaDestino >= len(areas) or areaDestino == areaAModificar:
-            print("Opción no válida. Intente nuevamente.")
+            print("Seleccione el área de investigación destino:")
+            for i, area in enumerate(areas):
+                if i != areaAModificar:
+                    print(f"{i+1}. {TADai.verNombreAreaInvestigacion(area)}")
+            areaDestino = int(input("Opción: ")) - 1
+
+            clear()
+
+            anioIngreso = int(input("Ingrese el año de inicio de los investigadores a reasignar: "))
+        
+        except ValueError as ve:
+            print(f"Opción no válida. Intente nuevamente. {ve}")
             input("Presione Enter para continuar...")
             continue
-
-    clear()
-
-    anioIngreso = int(input("Ingrese el año de inicio de los investigadores a reasignar: "))
-
+        except Exception as e:
+            print(f"Error: {e}. Intente nuevamente.")
+            input("Presione Enter para continuar...")
+            continue
+        break
     listadoReasignados = []
     i = 0
     maxLen = TADai.tamanioAreaInvestigacion(areas[areaAModificar])
@@ -300,64 +306,74 @@ def interfazReasignacionMasiva():
     print("Reasignación masiva completada exitosamente.")
     input("Presione Enter para continuar...")
 
-def interfazVerCola(areaDeInvestigacion):
-    clear()
-    print(f"Cola de presupuestos para el área de investigación {TADai.verNombreAreaInvestigacion(areas[areaDeInvestigacion])}:")
-    if areaDeInvestigacion not in colas or len(colas[areaDeInvestigacion]) == 0:
-        print("La cola está vacía.")
-
-def interfazModificarCola():
-    pass
-
 def interfazColaPresupuestos():
-    flag = True
-    while flag:
-        clear()
-        
-        print("--- Cola para presupuestos anuales ---")
-        for i, area in enumerate(areas):
-            print(f"{i+1}. {TADai.verNombreAreaInvestigacion(area)}")
-        areaSeleccionada = int(input("Seleccione un área de investigación: ")) - 1
-        
-        clear()
+    while True:
+        clear()    
+        try:
+            print("--- Cola para presupuestos anuales ---")
+            for i, area in enumerate(areas):
+                print(f"{i+1}. {TADai.verNombreAreaInvestigacion(area)}")
+            print("0. Volver al menú principal")
+            areaSeleccionada = int(input("Opcion: ")) - 1
+            if areaSeleccionada == -1:
+                return
+            if areaSeleccionada < 0 or areaSeleccionada >= len(areas):
+                raise ValueError("Indice de área no válido. Intente nuevamente.")
 
-        while True:
-            print("1. Ver Cola")
-            print("2. Modificar Cola")
-            print("3. Volver al menú principal")
-            opcion = int(input("Opción: "))
-            if opcion == 1:
-                interfazVerCola(areaSeleccionada)
-            elif opcion == 2:
-                interfazModificarCola()
-            elif opcion == 3:
-                break
-            else:
-                print("Opción no válida. Intente nuevamente.")
-                input("Presione Enter para continuar...")
+        except ValueError as ve:
+            print(f"Opción no válida. Intente nuevamente. {ve}")
+            input("Presione Enter para continuar...")
+            continue
+        except Exception as e:        
+            print(f"Error: {e}. Intente nuevamente.")
+            input("Presione Enter para continuar...")
+            continue
+        break
+    
+    clear()
 
-        print("")
+    colaPresupuestos = TADcola.crearCola()
+    print("--- Cola para presupuestos anuales ---")
+    i = 0
+    while i < TADai.tamanioAreaInvestigacion(areas[areaSeleccionada]):
+        investigadorActual = TADai.recuperarInvestigador(areas[areaSeleccionada], i)
+        TADcola.encolar(colaPresupuestos, investigadorActual)
+        i += 1
+    
+    while not TADcola.colaVacia(colaPresupuestos):
+        investigadorActual = TADcola.desencolar(colaPresupuestos)
+        print(f"Investigador {TADi.verNombre(investigadorActual)} {TADi.verApellido(investigadorActual)} fue desencolado ")
+    input("Presione Enter para continuar...")
 
 def eliminarPorAntiguedad():
+    clear()
+    print("--- Eliminar investigadores por antigüedad ---")
     fechaActual = date.today()
     eliminados = []
     for area in areas:
         i = 0
         maxLen = TADai.tamanioAreaInvestigacion(area)
+        print(f"\nArea de investigación: {TADai.verNombreAreaInvestigacion(area)}")
         while i < maxLen:
             investigadorActual = TADai.recuperarInvestigador(area, i)
 
-            diferencia = fechaActual - (timedelta(days=365*30) + TADi.verFechaIngreso(investigadorActual))
-
-            if diferencia.years <= 0:
-                TADai.eliminarInvestigador(area, investigadorActual)
-                eliminados.append(investigadorActual)
-                maxLen -= 1
+            fechaIngreso = TADi.verFechaIngreso(investigadorActual)
+            diferenciaFecha = fechaActual - fechaIngreso
+            aniosDiferencia = diferenciaFecha.days/365
+            if aniosDiferencia >= 30:
+                nombreInvestigador = TADi.verNombre(investigadorActual)
+                apellidoInvestigador = TADi.verApellido(investigadorActual)
+                
+                print(f"Investigador {nombreInvestigador} {apellidoInvestigador} eliminado por antigüedad")
+                eliminados.append([investigadorActual, area])
+                i += 1
             else:
                 i += 1
-    for eliminado in eliminados:
-        print(f"Investigador {TADi.verNombre(eliminado)} {TADi.verApellido(eliminado)} eliminado por antigüedad.")
-    print(f"Se eliminaron {len(eliminados)} investigadores.")
+    respuesta = input(f"¿Estpa seguro que desea eliminar a estos {len(eliminados)} investigadores? (s/n): ")
+    if respuesta.lower() == "s":
+        for investigador, area in eliminados:
+            TADai.eliminarInvestigador(area, investigador)
+        print(f"\nSe eliminaron {len(eliminados)} investigadores.\n")
     input("Presione Enter para continuar...")
 
 def menuPrincipal():
@@ -369,7 +385,7 @@ def menuPrincipal():
     print("5. Reasignación masiva por año de ingreso")
     print("6. Cola para presupuestos anuales")
     print("7. Eliminar investigadores por antigüedad")
-    print("8. Salir")    
+    print("0. Salir")    
     return input("Seleccione una opción: ")
 
 def interfazGrafica():
@@ -391,7 +407,7 @@ def interfazGrafica():
             interfazColaPresupuestos()
         elif opcion == "7":
             eliminarPorAntiguedad()
-        elif opcion == "8":
+        elif opcion == "0":
             print("Saliendo del programa...")
             break
         else:
