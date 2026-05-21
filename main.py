@@ -1,7 +1,7 @@
 import TADareaInvestigacion as TADai
 import TADInvestigador as TADi
 import TADcola
-from datetime import date, timedelta
+from datetime import date
 import os
 from random import randint 
 
