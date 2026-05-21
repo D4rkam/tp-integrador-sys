@@ -272,6 +272,8 @@ def interfazReasignacionMasiva():
                 if i != areaAModificar:
                     print(f"{i+1}. {TADai.verNombreAreaInvestigacion(area)}")
             areaDestino = int(input("Opción: ")) - 1
+            if areaDestino < 0 or areaDestino >= len(areas) or areaDestino == areaAModificar:
+                raise ValueError("Indice de área no válido. Intente nuevamente.")
 
             clear()
 
