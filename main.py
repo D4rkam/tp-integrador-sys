@@ -122,16 +122,14 @@ def interfazModificarInvestigador():
             legajo = int(input("Legajo: "))
             if legajo == 0:
                 break
+            investigador = buscarInvestigadorPorLegajo(legajo) 
+            if investigador is None:
+                raise ValueError("Investigador no encontrado.")
         except ValueError as ve:
             print(f"Opción no válida. Intente nuevamente. {ve}")
             input("Presione Enter para continuar...")
             continue
 
-        investigador = buscarInvestigadorPorLegajo(legajo) 
-        if investigador is None:
-            print("Investigador no encontrado.")
-            input("Presione Enter para continuar...")
-            continue
 
         while True:
             clear()
@@ -193,16 +191,19 @@ def intefazBajaPersonal():
     while flag:
         clear()
         print("--- Eliminar Investigadores ---")
-        print("Ingrese el legajo del investigador a modificar (ingrese 0 para volver al menú principal):")
-        legajo = int(input("Legajo: "))
-        if legajo == 0:
-            break
+        print("Ingrese el legajo del investigador a eliminar (ingrese 0 para volver al menú principal):")
+        try:
+            legajo = int(input("Legajo: "))
+            if legajo == 0:
+                break
+            investigador = buscarInvestigadorPorLegajo(legajo) 
+            if investigador is None:
+                raise ValueError("Investigador no encontrado.")
+        except ValueError as ve:
+            print(f"Opción no válida. Intente nuevamente. {ve}")
+            input("Presione Enter para continuar...")
+            continue
 
-        # investigador = buscarInvestigadorPorLegajo(legajo) 
-        # if investigador is None:
-        #     print("Investigador no encontrado.")
-        #     input("Presione Enter para continuar...")
-        #     continue
 
         eliminado = False
         for area in areas:
