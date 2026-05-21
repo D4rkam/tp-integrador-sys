@@ -1,8 +1,7 @@
 import TADareaInvestigacion as TADai
 import TADInvestigador as TADi
 # from TADCola import *
-from datetime import date
-from dateutil.relativedelta import relativedelta
+from datetime import date, timedelta
 import os
 from random import randint 
 
@@ -347,7 +346,10 @@ def eliminarPorAntiguedad():
         maxLen = TADai.tamanioAreaInvestigacion(area)
         while i < maxLen:
             investigadorActual = TADai.recuperarInvestigador(area, i)
-            if relativedelta(fechaActual, TADi.verFechaIngreso(investigadorActual)).years >= 30:
+
+            diferencia = fechaActual - (timedelta(days=365*30) + TADi.verFechaIngreso(investigadorActual))
+
+            if diferencia.years >= 30:
                 TADai.eliminarInvestigador(area, investigadorActual)
                 eliminados.append(investigadorActual)
                 maxLen -= 1
@@ -356,6 +358,7 @@ def eliminarPorAntiguedad():
     for eliminado in eliminados:
         print(f"Investigador {TADi.verNombre(eliminado)} {TADi.verApellido(eliminado)} eliminado por antigüedad.")
     print(f"Se eliminaron {len(eliminados)} investigadores.")
+    input("Presione Enter para continuar...")
 
 def menuPrincipal():
     print("\n--- Menú Principal ---")
