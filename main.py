@@ -65,18 +65,6 @@ def buscarInvestigadorPorLegajo(legajo):
                 return investigador
     return None
 
-def menuPrincipal():
-    print("\n--- Menú Principal ---")
-    print("1. Agregar investigador")
-    print("2. Modificar investigador")
-    print("3. Baja de personal")
-    print("4. Mostrar plantel de investigadores")
-    print("5. Reasignación masiva por año de ingreso")
-    print("6. Cola para presupuestos anuales")
-    print("7. Eliminar investigadores por antigüedad")
-    print("8. Salir")    
-    return input("Seleccione una opción: ")
-
 def interfazAgregarInvestigador():
     flag = True
     while flag: 
@@ -368,6 +356,18 @@ def eliminarPorAntiguedad():
     for eliminado in eliminados:
         print(f"Investigador {TADi.verNombre(eliminado)} {TADi.verApellido(eliminado)} eliminado por antigüedad.")
     print(f"Se eliminaron {len(eliminados)} investigadores.")
+
+def menuPrincipal():
+    print("\n--- Menú Principal ---")
+    print("1. Agregar investigador")
+    print("2. Modificar investigador")
+    print("3. Baja de personal")
+    print("4. Mostrar plantel de investigadores")
+    print("5. Reasignación masiva por año de ingreso")
+    print("6. Cola para presupuestos anuales")
+    print("7. Eliminar investigadores por antigüedad")
+    print("8. Salir")    
+    return input("Seleccione una opción: ")
 
 def interfazGrafica():
     while True:
