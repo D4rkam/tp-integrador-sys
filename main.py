@@ -118,9 +118,14 @@ def interfazModificarInvestigador():
         clear()
         print("--- Modificar Investigadores ---")
         print("Ingrese el legajo del investigador a modificar (ingrese 0 para volver al menú principal):")
-        legajo = int(input("Legajo: "))
-        if legajo == 0:
-            break
+        try:
+            legajo = int(input("Legajo: "))
+            if legajo == 0:
+                break
+        except ValueError as ve:
+            print(f"Opción no válida. Intente nuevamente. {ve}")
+            input("Presione Enter para continuar...")
+            continue
 
         investigador = buscarInvestigadorPorLegajo(legajo) 
         if investigador is None:
@@ -129,6 +134,9 @@ def interfazModificarInvestigador():
             continue
 
         while True:
+            clear()
+            print("--- Modificar Investigadores ---")
+
             print(f"¿Qué dato desea modificar del investigador {TADi.verNombre(investigador)} {TADi.verApellido(investigador)}?")
             print("1. Nombre")
             print("2. Apellido")
