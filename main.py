@@ -86,6 +86,8 @@ def interfazAgregarInvestigador():
             legajo = int(input("Ingrese el legajo: "))
             if legajo <= 0:
                 raise ValueError("El legajo tiene que mayor a 0.")
+            if buscarInvestigadorPorLegajo(legajo) is not None:
+                raise ValueError("El legajo ingresado ya existe. Intente con otro legajo.")
             nombre = input("Ingrese el nombre del investigador: ")
             apellido = input("Ingrese el apellido del investigador: ")
             nroLaboratorio = int(input("Ingrese el n° de laboratorio: "))
@@ -427,7 +429,7 @@ def interfazGrafica():
     return
 
 def main():
-    cargaInicial()
+    cargaInicial(60)
     interfazGrafica()
     return
 
