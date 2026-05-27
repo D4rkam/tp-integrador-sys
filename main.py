@@ -259,6 +259,14 @@ def intefazBajaPersonal():
         clear()
         # intefazMostrarPlantel()
         print("--- Eliminar Investigadores ---")
+        print("Investigadores disponibles:")
+        for area in areas:
+            print(f"\nÁrea de Investigación: {TADai.verNombreAreaInvestigacion(area)}")
+            for j in range(TADai.tamanioAreaInvestigacion(area)):
+                investigador = TADai.recuperarInvestigador(area, j)
+                print(
+                    f" - {TADi.verNombre(investigador)} {TADi.verApellido(investigador)} (Legajo: {TADi.verNroLegajo(investigador)})"
+                )
         print(
             "Ingrese el legajo del investigador a eliminar (ingrese 0 para volver al menú principal):"
         )
