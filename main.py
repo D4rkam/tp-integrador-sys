@@ -253,7 +253,7 @@ def interfazModificarInvestigador():
             flag = False
 
 
-def intefazBajaPersonal():
+def interfazBajaPersonal():
     flag = True
     while flag:
         clear()
@@ -336,7 +336,7 @@ def imprimirPlantelArea(area):
         )
 
 
-def intefazMostrarPlantel():
+def interfazMostrarPlantel():
     clear()
     print("--- Plantel de Investigadores ---")
 
@@ -471,6 +471,7 @@ def eliminarPorAntiguedad():
     fechaActual = date.today()
     eliminados = []
     for area in areas:
+        contadorElimnadorPorArea = 0
         i = 0
         maxLen = TADai.tamanioAreaInvestigacion(area)
         print(f"\nArea de investigación: {TADai.verNombreAreaInvestigacion(area)}")
@@ -488,11 +489,17 @@ def eliminarPorAntiguedad():
                     f"Investigador {nombreInvestigador} {apellidoInvestigador} eliminado por antigüedad"
                 )
                 eliminados.append([investigadorActual, area])
+                contadorElimnadorPorArea += 1
                 i += 1
             else:
                 i += 1
+        if contadorElimnadorPorArea == 0:
+            print("No se encontraron investigadores con más de 30 años de antigüedad.") 
+    if len(eliminados) == 0:
+        input("\nPresione Enter para continuar...")
+        return
     respuesta = input(
-        f"¿Estpa seguro que desea eliminar a estos {len(eliminados)} investigadores? (s/n): "
+        f"¿Está seguro que desea eliminar a estos {len(eliminados)} investigadores? (s/n): "
     )
     if respuesta.lower() == "s":
         for investigador, area in eliminados:
@@ -524,9 +531,9 @@ def interfazGrafica():
         elif opcion == "2":
             interfazModificarInvestigador()
         elif opcion == "3":
-            intefazBajaPersonal()
+            interfazBajaPersonal()
         elif opcion == "4":
-            intefazMostrarPlantel()
+            interfazMostrarPlantel()
         elif opcion == "5":
             interfazReasignacionMasiva()
         elif opcion == "6":
