@@ -192,6 +192,7 @@ def intefazBajaPersonal():
     flag = True
     while flag:
         clear()
+        # intefazMostrarPlantel()
         print("--- Eliminar Investigadores ---")
         print("Ingrese el legajo del investigador a eliminar (ingrese 0 para volver al menú principal):")
         try:
@@ -207,21 +208,33 @@ def intefazBajaPersonal():
             continue
 
 
-        eliminado = False
+        encontrado = False
         for area in areas:
             i = 0
             maxLen = TADai.tamanioAreaInvestigacion(area)
             while i < maxLen:
                 investigadorActual = TADai.recuperarInvestigador(area, i)
                 if TADi.verNroLegajo(investigadorActual) == legajo:
-                    TADai.eliminarInvestigador(area, investigadorActual)
-                    print(f"Investigador {TADi.verNombre(investigadorActual)} {TADi.verApellido(investigadorActual)} eliminado exitosamente.")
-                    eliminado = True
+                    nombre = TADi.verNombre(investigadorActual) + " " + TADi.verApellido(investigadorActual)
+                    legajo = TADi.verNroLegajo(investigadorActual)
+                    fechaDeIngreso = f"{TADi.verFechaIngreso(investigadorActual).day}/{TADi.verFechaIngreso(investigadorActual).month}/{TADi.verFechaIngreso(investigadorActual).year}"
+                    nroLaboratorio = TADi.verNroLab(investigadorActual)
+
+                    print("--------------------")
+                    print(f"{'Nombre y apellido':<25} {'Legajo':<10} {'Año de ingreso':<15} {'Laboratorio':<10}")
+                    print(f"{nombre:<25} {legajo:<10} {fechaDeIngreso:<15} {nroLaboratorio:<10}")
+                    print("--------------------")
+
+                    confirmar = input("¿Desea eliminar al investigador? (s/n): ")
+                    if confirmar.lower() == "s":
+                        TADai.eliminarInvestigador(area, investigadorActual)
+                        print(f"Investigador {TADi.verNombre(investigadorActual)} {TADi.verApellido(investigadorActual)} eliminado exitosamente. \n")
+                    encontrado = True
                     break
                 i += 1
-            if eliminado:
+            if encontrado:
                 break
-        if not eliminado:
+        if not encontrado:
             print("Investigador no encontrado.")
         
         continuar = input("¿Desea eliminar otro investigador? (s/n): ")
@@ -403,7 +416,7 @@ def menuPrincipal():
 
 def interfazGrafica():
     while True:
-        clear()
+        clear() 
         opcion = menuPrincipal()
         
         if opcion == "1":
