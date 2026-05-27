@@ -147,6 +147,10 @@ def interfazAgregarInvestigador():
         )
 
         TADai.agregarInvestigador(areas[areaSeleccionada], nuevoInvestigador)
+        print()
+        imprimirInvestigador(nuevoInvestigador, primeraLinea=True)
+        print()
+
         print("Investigador agregado exitosamente.")
         continuar = input("¿Desea agregar otro investigador? (s/n): ")
         if continuar.lower() != "s":
@@ -290,16 +294,7 @@ def interfazBajaPersonal():
             while i < maxLen:
                 investigadorActual = TADai.recuperarInvestigador(area, i)
                 if TADi.verNroLegajo(investigadorActual) == legajo:
-                    nombre = TADi.verNombre(investigadorActual) + " " + TADi.verApellido(investigadorActual)
-                    legajo = TADi.verNroLegajo(investigadorActual)
-                    fechaDeIngreso = f"{TADi.verFechaIngreso(investigadorActual).day}/{TADi.verFechaIngreso(investigadorActual).month}/{TADi.verFechaIngreso(investigadorActual).year}"
-                    nroLaboratorio = TADi.verNroLab(investigadorActual)
-
-                    print("--------------------")
-                    print(f"{'Nombre y apellido':<25} {'Legajo':<10} {'Año de ingreso':<15} {'Laboratorio':<10}")
-                    print(f"{nombre:<25} {legajo:<10} {fechaDeIngreso:<15} {nroLaboratorio:<10}")
-                    print("--------------------")
-
+                    imprimirInvestigador(investigadorActual)
                     confirmar = input("¿Desea eliminar al investigador? (s/n): ")
                     if confirmar.lower() == "s":
                         TADai.eliminarInvestigador(area, investigadorActual)
@@ -317,23 +312,28 @@ def interfazBajaPersonal():
             flag = False
 
 
+def imprimirInvestigador(investigador, primeraLinea=False, indice=None):
+    if primeraLinea:
+        print(
+            f"{"":<3} {'Nombre y apellido':<25} {'Legajo':<10} {'Año de ingreso':<15} {'Laboratorio':<10}"
+        )
+    nombre = TADi.verNombre(investigador) + " " + TADi.verApellido(investigador)
+    legajo = TADi.verNroLegajo(investigador)
+    fechaDeIngreso = f"{TADi.verFechaIngreso(investigador).day}/{TADi.verFechaIngreso(investigador).month}/{TADi.verFechaIngreso(investigador).year}"
+    nroLaboratorio = TADi.verNroLab(investigador)
+    print(
+        f"{"" if not indice else indice:<3} {nombre:<25} {legajo:<10} {fechaDeIngreso:<15} {nroLaboratorio:<10}"
+    )
+
+
 def imprimirPlantelArea(area):
     print(f"\nÁrea de Investigación: {TADai.verNombreAreaInvestigacion(area)}")
     if TADai.tamanioAreaInvestigacion(area) == 0:
         print("No hay investigadores en esta área.")
         return
-    print(
-        f"{'':<3} {'Nombre y apellido':<25} {'Legajo':<10} {'Año de ingreso':<15} {'Laboratorio':<10}"
-    )
     for j in range(TADai.tamanioAreaInvestigacion(area)):
         investigador = TADai.recuperarInvestigador(area, j)
-        nombre = TADi.verNombre(investigador) + " " + TADi.verApellido(investigador)
-        legajo = TADi.verNroLegajo(investigador)
-        fechaDeIngreso = f"{TADi.verFechaIngreso(investigador).day}/{TADi.verFechaIngreso(investigador).month}/{TADi.verFechaIngreso(investigador).year}"
-        nroLaboratorio = TADi.verNroLab(investigador)
-        print(
-            f"{j + 1:<3} {nombre:<25} {legajo:<10} {fechaDeIngreso:<15} {nroLaboratorio:<10}"
-        )
+        imprimirInvestigador(investigador, indice=j + 1, primeraLinea=(j == 0))
 
 
 def interfazMostrarPlantel():
